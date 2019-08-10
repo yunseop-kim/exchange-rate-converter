@@ -3,9 +3,10 @@ import { Dollar } from '../src/main';
 describe('Dollar', () => {
   it('manipulation', () => {
     const five: Dollar = new Dollar(5);
+    let product: Dollar = five.times(2);
     five.times(2);
-    expect(five.amount).toBe(10);
-    five.times(3);
-    expect(five.amount).toBe(15);
+    expect(product.amount).toBe(10);
+    product = five.times(3);
+    expect(product.amount).toBe(15);
   });
 });
