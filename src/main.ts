@@ -12,3 +12,17 @@ export class Dollar {
     return this.amount === dollar.amount
   }
 }
+export class Franc {
+  public amount: number;
+  constructor(amount: number) {
+    this.amount = amount;
+  }
+  public times(multiplier: number): Franc {
+    return new Franc(this.amount * multiplier);
+  }
+
+  public equals(object: Object): boolean {
+    const franc: Franc = object as Franc
+    return this.amount === franc.amount
+  }
+}

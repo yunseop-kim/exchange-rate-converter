@@ -1,4 +1,4 @@
-import { Dollar } from '../src/main';
+import { Dollar, Franc } from '../src/main';
 
 describe('Dollar', () => {
   it('manipulation', () => {
@@ -10,4 +10,13 @@ describe('Dollar', () => {
   it('equality', () => {
     expect(new Dollar(5).equals(new Dollar(5)));
   });
+});
+
+describe('Franc', () => {
+  it('manipulation', () => {
+    const five: Franc = new Franc(5);
+    expect(new Franc(10)).toEqual(five.times(2));
+    expect(new Franc(15)).toEqual(five.times(3));
+  });
+
 });
