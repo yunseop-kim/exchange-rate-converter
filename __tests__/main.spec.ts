@@ -8,7 +8,7 @@ describe('Dollar', () => {
   });
 
   it('equality', () => {
-    expect(new Dollar(5).equals(new Dollar(5)));
+    expect(new Dollar(5).equals(new Dollar(5))).toBeTruthy();
   });
 });
 
