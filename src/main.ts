@@ -1,6 +1,10 @@
-export class Dollar {
-  private amount: number;
+
+export class Money {
+  protected amount: number;
+}
+export class Dollar extends Money {
   constructor(amount: number) {
+    super()
     this.amount = amount;
   }
   public times(multiplier: number): Dollar {
@@ -12,9 +16,9 @@ export class Dollar {
     return this.amount === dollar.amount
   }
 }
-export class Franc {
-  private amount: number;
+export class Franc extends Money {
   constructor(amount: number) {
+    super()
     this.amount = amount;
   }
   public times(multiplier: number): Franc {
