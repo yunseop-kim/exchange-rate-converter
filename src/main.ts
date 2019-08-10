@@ -8,6 +8,7 @@ export class Dollar {
   }
 
   public equals(object: Object): boolean {
-    return true
+    const dollar: Dollar = object as Dollar
+    return this.amount === dollar.amount
   }
 }
