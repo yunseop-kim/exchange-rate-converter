@@ -4,7 +4,6 @@ export class Dollar {
     this.amount = amount
   }
   public times(multiplier: number): Dollar {
-    this.amount *= multiplier
-    return null
+    return new Dollar(this.amount * multiplier)
   }
 }
