@@ -1,6 +1,11 @@
 
 export class Money {
   protected amount: number;
+  
+  public equals(object: Object): boolean {
+    const money: Money = object as Dollar
+    return this.amount === money.amount
+  }
 }
 export class Dollar extends Money {
   constructor(amount: number) {
@@ -10,11 +15,6 @@ export class Dollar extends Money {
   public times(multiplier: number): Dollar {
     return new Dollar(this.amount * multiplier);
   }
-
-  public equals(object: Object): boolean {
-    const dollar: Dollar = object as Dollar
-    return this.amount === dollar.amount
-  }
 }
 export class Franc extends Money {
   constructor(amount: number) {
@@ -23,10 +23,5 @@ export class Franc extends Money {
   }
   public times(multiplier: number): Franc {
     return new Franc(this.amount * multiplier);
-  }
-
-  public equals(object: Object): boolean {
-    const franc: Franc = object as Franc
-    return this.amount === franc.amount
   }
 }
