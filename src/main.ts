@@ -11,7 +11,7 @@ export class Money {
     const money: Money = object;
     return (
       this.amount === money.amount &&
-      this.constructor.name === money.constructor.name
+      this.currency() === money.currency()
     );
   }
 
