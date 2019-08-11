@@ -23,10 +23,6 @@ export class Money {
     return new Franc(amount, 'CHF');
   }
 
-  times(multiplier: number): Money {
-    return null;
-  }
-
   currency(): String {
     return this._currency;
   }
@@ -34,20 +30,18 @@ export class Money {
   toString(): String {
     return this.amount + ' ' + this._currency;
   }
+
+  public times(multiplier: number): Money {
+    return new Money(this.amount * multiplier, this._currency);
+  }
 }
 export class Dollar extends Money {
   constructor(amount: number, currency: String) {
     super(amount, currency);
   }
-  public times(multiplier: number): Money {
-    return new Money(this.amount * multiplier, this._currency);
-  }
 }
 export class Franc extends Money {
   constructor(amount: number, currency: String) {
     super(amount, currency);
-  }
-  public times(multiplier: number): Money {
-    return new Money(this.amount * multiplier, this._currency);
   }
 }
