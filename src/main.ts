@@ -1,6 +1,6 @@
 export abstract class Money {
   protected amount: number;
-  private _currency: String;
+  protected _currency: String;
   public equals(object: Object): boolean {
     const money: Money = object as Money;
     return (
