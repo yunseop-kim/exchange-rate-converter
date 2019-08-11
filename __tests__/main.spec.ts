@@ -34,7 +34,7 @@ describe('Money', () => {
     const bank: Bank = new Bank();
     const reduced: Money = bank.reduce(sum, 'USD');
     expect(Money.dollar(10)).toEqual(reduced);
-  })
+  });
 
   it('plus returns sum', () => {
     const five: Money = Money.dollar(5);
@@ -42,12 +42,18 @@ describe('Money', () => {
     const sum: Sum = result as Sum;
     expect(five).toEqual(sum.augend);
     expect(five).toEqual(sum.addend);
-  })
+  });
 
   it('reduce sum', () => {
-    const sum :Expression = new Sum(Money.dollar(3), Money.dollar(4));
+    const sum: Expression = new Sum(Money.dollar(3), Money.dollar(4));
     const bank: Bank = new Bank();
     const result: Money = bank.reduce(sum, 'USD');
     expect(Money.dollar(7)).toEqual(result);
-  })
+  });
+
+  it('reduce money', () => {
+    const bank: Bank = new Bank();
+    const result: Money = bank.reduce(Money.dollar(1), 'USD');
+    expect(Money.dollar(1)).toEqual(result);
+  });
 });

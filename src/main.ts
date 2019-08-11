@@ -1,15 +1,17 @@
 export class Money implements Expression {
-  protected amount: number;
+  protected _amount: number;
   protected _currency: String;
 
   constructor(amount: number, currency: String) {
-    this.amount = amount;
+    this._amount = amount;
     this._currency = currency;
   }
 
   public equals(object: Money): boolean {
     const money: Money = object;
-    return this.amount === money.amount && this.currency() === money.currency();
+    return (
+      this._amount === money.amount && this.currency() === money.currency()
+    );
   }
 
   static dollar(amount: number): Money {
@@ -25,23 +27,33 @@ export class Money implements Expression {
   }
 
   toString(): String {
-    return this.amount + ' ' + this._currency;
+    return this._amount + ' ' + this._currency;
   }
 
   public times(multiplier: number): Money {
-    return new Money(this.amount * multiplier, this._currency);
+    return new Money(this._amount * multiplier, this._currency);
   }
 
   public plus(addend: Money): Expression {
     return new Sum(this, addend);
   }
+
+  get amount(): number {
+    return this._amount;
+  }
+
+  reduce(to: String): Money {
+    return this;
+  }
 }
 
-export interface Expression {}
+export interface Expression {
+  reduce(to: String): Money;
+}
 
 export class Bank {
   reduce(source: Expression, to: String): Money {
-    return Money.dollar(10);
+    return source.reduce(to);
   }
 }
 
@@ -51,5 +63,9 @@ export class Sum implements Expression {
   constructor(augend: Money, addend: Money) {
     this.augend = augend;
     this.addend = addend;
+  }
+  reduce(to: String): Money {
+    const amount: number = this.augend.amount + this.addend.amount;
+    return new Money(amount, to);
   }
 }
