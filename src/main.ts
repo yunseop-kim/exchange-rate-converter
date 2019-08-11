@@ -1,27 +1,39 @@
-
-export class Money {
+export abstract class Money {
   protected amount: number;
-  
+
   public equals(object: Object): boolean {
-    const money: Money = object as Money
-    return this.amount === money.amount && this.constructor.name === money.constructor.name
+    const money: Money = object as Money;
+    return (
+      this.amount === money.amount &&
+      this.constructor.name === money.constructor.name
+    );
   }
+
+  static dollar(amount: number): Dollar {
+    return new Dollar(amount);
+  }
+
+  static franc(amount: number): Franc {
+    return new Franc(amount);
+  }
+
+  abstract times(multiplier: number): Money;
 }
 export class Dollar extends Money {
   constructor(amount: number) {
-    super()
+    super();
     this.amount = amount;
   }
-  public times(multiplier: number): Dollar {
+  public times(multiplier: number): Money {
     return new Dollar(this.amount * multiplier);
   }
 }
 export class Franc extends Money {
   constructor(amount: number) {
-    super()
+    super();
     this.amount = amount;
   }
-  public times(multiplier: number): Franc {
+  public times(multiplier: number): Money {
     return new Franc(this.amount * multiplier);
   }
 }
