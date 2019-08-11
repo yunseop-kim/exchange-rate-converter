@@ -1,10 +1,10 @@
 export abstract class Money {
   protected amount: number;
   protected _currency: String;
-  
+
   constructor(amount: number, currency: String) {
     this.amount = amount;
-    this._currency = currency
+    this._currency = currency;
   }
 
   public equals(object: Object): boolean {
@@ -33,7 +33,7 @@ export class Dollar extends Money {
     super(amount, currency);
   }
   public times(multiplier: number): Money {
-    return Money.dollar(this.amount * multiplier);
+    return new Dollar(this.amount * multiplier, this._currency);
   }
 }
 export class Franc extends Money {
@@ -41,6 +41,6 @@ export class Franc extends Money {
     super(amount, currency);
   }
   public times(multiplier: number): Money {
-    return Money.franc(this.amount * multiplier);
+    return new Franc(this.amount * multiplier, this._currency);
   }
 }
