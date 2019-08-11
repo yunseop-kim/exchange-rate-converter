@@ -27,4 +27,9 @@ describe('Money', () => {
     expect('USD').toEqual(Money.dollar(1).currency());
     expect('CHF').toEqual(Money.franc(1).currency());
   });
+
+  it('simple addition', () => {
+    const sum: Money = Money.dollar(5).plus(Money.dollar(5))
+    expect(Money.dollar(10)).toEqual(sum);
+  })
 });
