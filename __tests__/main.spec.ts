@@ -29,4 +29,8 @@ describe('Money', () => {
     expect('USD').toEqual(Money.dollar(1).currency());
     expect('CHF').toEqual(Money.franc(1).currency());
   });
+
+  it('different class equality', () => {
+    expect(new Money(10, 'CHF').equals(new Franc(10, 'CHF'))).toBeTruthy();
+  });
 });
