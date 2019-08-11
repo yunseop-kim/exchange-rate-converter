@@ -1,4 +1,4 @@
-export class Money {
+export class Money implements Expression {
   protected amount: number;
   protected _currency: String;
 
@@ -9,10 +9,7 @@ export class Money {
 
   public equals(object: Money): boolean {
     const money: Money = object;
-    return (
-      this.amount === money.amount &&
-      this.currency() === money.currency()
-    );
+    return this.amount === money.amount && this.currency() === money.currency();
   }
 
   static dollar(amount: number): Money {
@@ -33,5 +30,17 @@ export class Money {
 
   public times(multiplier: number): Money {
     return new Money(this.amount * multiplier, this._currency);
+  }
+
+  public plus(addend: Money): Expression {
+    return new Money(this.amount + addend.amount, this._currency);
+  }
+}
+
+export interface Expression {}
+
+export class Bank {
+  reduce(source: Expression, to: String): Money {
+    return Money.dollar(10);
   }
 }

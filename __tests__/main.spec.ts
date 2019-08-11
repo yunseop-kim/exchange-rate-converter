@@ -1,4 +1,4 @@
-import { Money } from '../src/main';
+import { Money, Bank, Expression } from '../src/main';
 
 describe('Dollar', () => {
   it('manipulation', () => {
@@ -29,7 +29,10 @@ describe('Money', () => {
   });
 
   it('simple addition', () => {
-    const sum: Money = Money.dollar(5).plus(Money.dollar(5))
-    expect(Money.dollar(10)).toEqual(sum);
+    const five: Money = Money.dollar(5);
+    const sum: Expression = five.plus(five);
+    const bank: Bank = new Bank();
+    const reduced: Money = bank.reduce(sum, 'USD');
+    expect(Money.dollar(10)).toEqual(reduced);
   })
 });
