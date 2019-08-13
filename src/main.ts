@@ -1,8 +1,8 @@
 export class Money implements Expression {
   protected _amount: number;
-  protected _currency: String;
+  protected _currency: string;
 
-  constructor(amount: number, currency: String) {
+  constructor(amount: number, currency: string) {
     this._amount = amount;
     this._currency = currency;
   }
@@ -22,11 +22,11 @@ export class Money implements Expression {
     return new Money(amount, 'CHF');
   }
 
-  currency(): String {
+  currency(): string {
     return this._currency;
   }
 
-  toString(): String {
+  toString(): string {
     return this._amount + ' ' + this._currency;
   }
 
@@ -42,19 +42,32 @@ export class Money implements Expression {
     return this._amount;
   }
 
-  reduce(to: String): Money {
-    const rate: number = this._currency === 'CHF' && to === 'USD' ? 2 : 1;
-    return new Money(this.amount / rate, to)
+  reduce(bank: Bank, to: string): Money {
+    const rate: number = bank.rate(this._currency, to);
+    return new Money(this.amount / rate, to);
   }
 }
 
 export interface Expression {
-  reduce(to: String): Money;
+  reduce(bank: Bank, to: string): Money;
 }
 
 export class Bank {
-  reduce(source: Expression, to: String): Money {
-    return source.reduce(to);
+  private _rates: Object = new Object();
+
+  reduce(source: Expression, to: string): Money {
+    return source.reduce(this, to);
+  }
+
+  rate(from: string, to: string): number {
+    if (from === to) return 1;
+    const rate: number = this._rates[`${from}-${to}`];
+    console.log('rate', rate)
+    return rate;
+  }
+
+  addRate(from: string, to: string, rate: number): void {
+    this._rates[`${from}-${to}`] = rate;
   }
 }
 
@@ -65,7 +78,7 @@ export class Sum implements Expression {
     this.augend = augend;
     this.addend = addend;
   }
-  reduce(to: String): Money {
+  reduce(bank: Bank, to: string): Money {
     const amount: number = this.augend.amount + this.addend.amount;
     return new Money(amount, to);
   }
