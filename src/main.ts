@@ -63,7 +63,6 @@ export class Bank {
   rate(from: string, to: string): number {
     if (from === to) return 1;
     const rate: number = this._rates[`${from}-${to}`];
-    console.log('rate', rate)
     return rate;
   }
 
@@ -80,10 +79,11 @@ export class Sum implements Expression {
     this.addend = addend;
   }
   reduce(bank: Bank, to: string): Money {
-    const amount: number = this.augend.reduce(bank, to).amount + this.addend.reduce(bank, to).amount;
+    const amount: number =
+      this.augend.reduce(bank, to).amount + this.addend.reduce(bank, to).amount;
     return new Money(amount, to);
   }
   plus(addend: Expression): Expression {
-    throw new Error("Method not implemented.");
+    throw new Sum(this, addend);
   }
 }
