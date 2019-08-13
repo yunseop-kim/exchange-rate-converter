@@ -30,11 +30,11 @@ export class Money implements Expression {
     return this._amount + ' ' + this._currency;
   }
 
-  public times(multiplier: number): Money {
+  public times(multiplier: number): Expression {
     return new Money(this._amount * multiplier, this._currency);
   }
 
-  public plus(addend: Money): Expression {
+  public plus(addend: Expression): Expression {
     return new Sum(this, addend);
   }
 
@@ -50,6 +50,7 @@ export class Money implements Expression {
 
 export interface Expression {
   reduce(bank: Bank, to: string): Money;
+  plus(addend: Expression): Expression;
 }
 
 export class Bank {
@@ -72,14 +73,17 @@ export class Bank {
 }
 
 export class Sum implements Expression {
-  augend: Money;
-  addend: Money;
-  constructor(augend: Money, addend: Money) {
+  augend: Expression;
+  addend: Expression;
+  constructor(augend: Expression, addend: Expression) {
     this.augend = augend;
     this.addend = addend;
   }
   reduce(bank: Bank, to: string): Money {
-    const amount: number = this.augend.amount + this.addend.amount;
+    const amount: number = this.augend.reduce(bank, to).amount + this.addend.reduce(bank, to).amount;
     return new Money(amount, to);
+  }
+  plus(addend: Expression): Expression {
+    throw new Error("Method not implemented.");
   }
 }
